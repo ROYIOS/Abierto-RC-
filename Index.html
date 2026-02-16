@@ -20,7 +20,7 @@
       --line:rgba(11,15,24,.10);
       --line2:rgba(11,15,24,.08);
 
-      /* Accent (keep your turquoise/blue, but subtle) */
+      /* Accent */
       --tq:#16c7b7;
       --aqua:#2fe6d6;
       --blue:#2f6bff;
@@ -43,7 +43,7 @@
       overflow-x:hidden;
     }
 
-    /* subtle background accents (very Apple: barely there) */
+    /* subtle background accents */
     .bg-accent{
       position:fixed; inset:-20%;
       pointer-events:none;
@@ -51,11 +51,10 @@
         radial-gradient(900px 650px at 22% 20%, rgba(47,107,255,.10) 0%, rgba(47,107,255,0) 55%),
         radial-gradient(900px 650px at 78% 18%, rgba(47,230,214,.11) 0%, rgba(47,230,214,0) 56%),
         radial-gradient(900px 650px at 52% 92%, rgba(22,199,183,.08) 0%, rgba(22,199,183,0) 58%);
-      filter: blur(0px);
       opacity:1;
     }
 
-    /* Top nav (minimal) */
+    /* Top nav */
     .nav{
       position:fixed;
       top:16px; left:50%;
@@ -135,7 +134,7 @@
       gap: 18px;
     }
 
-    /* Slide sections (white cards with soft borders) */
+    /* Slide */
     .slide{
       position:relative;
       border:1px solid var(--line);
@@ -147,8 +146,6 @@
       min-height: 620px;
       scroll-margin-top: 110px;
     }
-
-    /* Apple-like thin accent line */
     .slide::before{
       content:"";
       position:absolute;
@@ -158,7 +155,6 @@
       opacity:.9;
     }
 
-    /* super subtle corner glow */
     .glow{
       position:absolute; inset:auto -30% -40% -30%;
       height: 420px;
@@ -209,6 +205,7 @@
       background-clip: text;
       color: transparent;
     }
+
     .center{
       text-align:center;
       display:flex;
@@ -216,18 +213,19 @@
       justify-content:center;
       align-items:center;
     }
-    /* Slide variant: same look, but aligns content to top (avoids "vertical" feel) */
-.top{
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;  /* key change */
-  align-items: center;
-  padding-top: calc(var(--pad) + 14px);
-}
     .tight p{ max-width: 62ch; }
 
-    /* Apple cards */
+    /* Top-aligned slide content (fix for "vertical") */
+    .top{
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:center;
+      padding-top: calc(var(--pad) + 4px);
+    }
+
+    /* Cards */
     .row{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -259,6 +257,7 @@
       text-transform: uppercase;
       color: rgba(11,15,24,.62);
       font-weight: 700;
+      position:relative; z-index:1;
     }
     .metric{
       margin: 10px 0 0;
@@ -288,7 +287,7 @@
       z-index:1;
     }
 
-    /* List tiles */
+    /* Grid tiles */
     .grid{
       margin-top: 28px;
       width:100%;
@@ -375,7 +374,7 @@
       box-shadow: 0 0 0 1px rgba(47,107,255,.10) inset, var(--shadow2);
     }
 
-    /* Footer per slide */
+    /* Footer */
     .footer{
       position:absolute;
       bottom:16px;
@@ -392,7 +391,6 @@
       pointer-events:none;
     }
 
-    /* Mobile */
     @media (max-width: 980px){
       .navlinks{ display:none; }
       .row{ grid-template-columns: 1fr; }
@@ -453,8 +451,6 @@
       <p>
         ABIERTO RC es un torneo enfocado en valores: respeto, excelencia, comunidad y formación.
         Aquí el carácter pesa tanto como el marcador.
-      </p>
-      <p style="margin-top:10px;color:rgba(11,15,24,.64)">
       </p>
 
       <div class="footer">
@@ -524,131 +520,133 @@
 
     <!-- 5) CAPACIDAD -->
     <section class="slide center" id="capacidad" aria-label="Capacidad">
-   <!-- 5) CAPACIDAD -->
-<section class="slide center" id="capacidad" aria-label="Capacidad">
-  <div class="glow" aria-hidden="true"></div>
+      <div class="glow" aria-hidden="true"></div>
 
-  <div class="kicker"><span class="dot"></span> capacidad</div>
-  <h2>Capacidad del torneo</h2>
+      <div class="kicker"><span class="dot"></span> capacidad</div>
+      <h2>Capacidad del torneo</h2>
 
-  <div class="row" style="max-width:980px">
-    <div class="card">
-      <h3>Parejas</h3>
-      <div class="metric"><span class="accent">44</span></div>
-      <div class="label">cupo total</div>
-      <div class="small">Formato recomendado para operación limpia y experiencia premium.</div>
-    </div>
+      <div class="row" style="max-width:980px">
+        <div class="card">
+          <h3>Parejas</h3>
+          <div class="metric"><span class="accent">44</span></div>
+          <div class="label">cupo total</div>
+          <div class="small">Formato recomendado para operación limpia y experiencia premium.</div>
+        </div>
 
-    <div class="card">
-      <h3>Jugadores</h3>
-      <div class="metric"><span class="accent">88</span></div>
-      <div class="label">participantes</div>
-      <div class="small">Doble varonil/mixto/femenil según categorías definidas.</div>
-    </div>
+        <div class="card">
+          <h3>Jugadores</h3>
+          <div class="metric"><span class="accent">88</span></div>
+          <div class="label">participantes</div>
+          <div class="small">Doble varonil/mixto/femenil según categorías definidas.</div>
+        </div>
 
-    <div class="card">
-      <h3>Categorías</h3>
-      <div class="metric"><span class="accent">3</span></div>
-      <div class="label">niveles</div>
-      <div class="small">Estructura clara para competitividad y orden.</div>
-    </div>
+        <div class="card">
+          <h3>Categorías</h3>
+          <div class="metric"><span class="accent">3</span></div>
+          <div class="label">niveles</div>
+          <div class="small">Estructura clara para competitividad y orden.</div>
+        </div>
 
-    <div class="card">
-      <h3>Costo del torneo</h3>
-      <div class="metric"><span class="accent">$950</span></div>
-      <div class="label">inscripción</div>
-      <div class="small">Cuota individual por jugador.</div>
-    </div>
-  </div>
+        <div class="card">
+          <h3>Costo del torneo</h3>
+          <div class="metric"><span class="accent">$950</span></div>
+          <div class="label">inscripción</div>
+          <div class="small">Cuota individual por jugador.</div>
+        </div>
+      </div>
 
-  <div class="footer">
-    <span>Capacidad</span>
-    <span>ABIERTO RC</span>
-  </div>
-</section>
+      <div class="footer">
+        <span>Capacidad</span>
+        <span>ABIERTO RC</span>
+      </div>
+    </section>
+
     <!-- 6) SEDES -->
-   <!-- 6) SEDES -->
-<section class="slide" id="sedes" aria-label="Sedes">
-  <div class="glow" aria-hidden="true"></div>
+    <section class="slide" id="sedes" aria-label="Sedes">
+      <div class="glow" aria-hidden="true"></div>
 
-  <div class="kicker"><span class="dot"></span> sedes del torneo</div>
-  <h2>Sedes</h2>
-  <p style="max-width:78ch">
-    Diferencia clave: <strong>precio</strong> y <strong>espacio</strong>.
-  </p>
+      <div class="kicker"><span class="dot"></span> sedes del torneo</div>
+      <h2>Sedes</h2>
+      <p style="max-width:78ch">
+        Diferencia clave: <strong>precio</strong> y <strong>espacio</strong>.
+      </p>
 
-  <div class="compare">
-    <div class="panel">
-      <div class="head">
-        <h3>Club de Pádel</h3>
-        <span class="badge">Opción 1</span>
+      <div class="compare">
+        <div class="panel">
+          <div class="head">
+            <h3>Club de Pádel</h3>
+            <span class="badge">Opción 1</span>
+          </div>
+          <div class="kv">
+            <div><strong>Precio:</strong> Estándar</div>
+            <div><strong>Espacio:</strong> Enfocado en competencia (más limitado)</div>
+          </div>
+        </div>
+
+        <div class="panel hi">
+          <div class="head">
+            <h3>La Loma / Campestre</h3>
+            <span class="badge">Opción 2</span>
+          </div>
+          <div class="kv">
+            <div><strong>Precio:</strong> Más económico</div>
+            <div><strong>Espacio:</strong> Mayor amplitud (experiencia más premium)</div>
+          </div>
+        </div>
       </div>
-      <div class="kv">
-        <div><strong>Precio:</strong> Estándar</div>
-        <div><strong>Espacio:</strong> Enfocado en competencia (más limitado)</div>
+
+      <!-- Recursos bajados aquí -->
+      <div class="row" style="margin-top:28px; max-width:720px;">
+        <div class="card">
+          <h3>Recursos</h3>
+          <div class="metric"><span class="accent">3</span></div>
+          <div class="label">canchas disponibles</div>
+          <div class="small">Operación viernes, sábado y final domingo 12:00 PM.</div>
+        </div>
       </div>
-    </div>
 
-    <div class="panel hi">
-      <div class="head">
-        <h3>La Loma / Campestre</h3>
-        <span class="badge">Opción 2</span>
+      <div class="footer">
+        <span>Sedes</span>
+        <span>ABIERTO RC</span>
       </div>
-      <div class="kv">
-        <div><strong>Precio:</strong> Más económico</div>
-        <div><strong>Espacio:</strong> Mayor amplitud (experiencia más premium)</div>
+    </section>
+
+    <!-- 7) PREMIOS -->
+    <section class="slide top tight" id="premios" aria-label="Premios">
+      <div class="glow" aria-hidden="true"></div>
+
+      <div class="kicker"><span class="dot"></span> premios</div>
+      <h2>Bolsa de premios</h2>
+
+      <div style="margin-top:22px; padding:36px; border-radius:28px; border:1px solid var(--line); background:rgba(255,255,255,.92); box-shadow:var(--shadow2); max-width:520px; width:100%;">
+        <div style="font-size:16px; letter-spacing:.12em; text-transform:uppercase; color:rgba(11,15,24,.55);">
+          Total
+        </div>
+
+        <div style="margin-top:10px; font-size:72px; font-weight:800; letter-spacing:-.05em;">
+          <span class="accent">$40,000</span>
+        </div>
+
+        <div style="margin-top:6px; font-size:14px; color:rgba(11,15,24,.55);">
+          MXN
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Recursos bajados aquí -->
-  <div class="row" style="margin-top:28px; max-width:720px;">
-    <div class="card">
-      <h3>Recursos</h3>
-      <div class="metric"><span class="accent">3</span></div>
-      <div class="label">canchas disponibles</div>
-      <div class="small">Operación viernes, sábado y final domingo 12:00 PM.</div>
-    </div>
-  </div>
+      <div class="footer">
+        <span>Premios</span>
+        <span>ABIERTO RC</span>
+      </div>
+    </section>
 
-  <div class="footer">
-    <span>Sedes</span>
-    <span>ABIERTO RC</span>
-  </div>
-</section>
+  </main>
 
-   <!-- 7) PREMIOS -->
-<section class="slide top tight" id="premios" aria-label="Premios">
-  <div class="glow" aria-hidden="true"></div>
-
-  <div class="kicker"><span class="dot"></span> premios</div>
-  <h2>Bolsa de premios</h2>
-
-  <div style="margin-top:26px; padding:38px; border-radius:28px; border:1px solid var(--line); background:rgba(255,255,255,.92); box-shadow:var(--shadow2); max-width:520px; width:100%;">
-    <div style="font-size:16px; letter-spacing:.12em; text-transform:uppercase; color:rgba(11,15,24,.55);">
-      Total
-    </div>
-
-    <div style="margin-top:10px; font-size:72px; font-weight:800; letter-spacing:-.05em;">
-      <span class="accent">$40,000</span>
-    </div>
-
-    <div style="margin-top:6px; font-size:14px; color:rgba(11,15,24,.55);">
-      MXN
-    </div>
-  </div>
-
-  <div class="footer">
-    <span>Premios</span>
-    <span>ABIERTO RC</span>
-  </div>
-</section>
+  <script>
     // Top button
     document.getElementById('topBtn')?.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Optional: keyboard slide navigation (←/→ scroll to next/prev slide)
+    // Keyboard slide navigation (←/→)
     const slides = Array.from(document.querySelectorAll('.slide'));
     let idx = 0;
 
