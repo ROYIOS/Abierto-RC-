@@ -34,47 +34,53 @@
     }
 /* Animated Page Border */
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  padding:.5px; /* grosor del borde */
-  border-radius: 0px;
-  background: linear-gradient(
-    120deg,
-    rgba(47,107,255,.6),
-    rgba(47,230,214,.8),
-    rgba(22,199,183,.6),
-    rgba(47,107,255,.6)
-  );
-  background-size: 300% 300%;
-  animation: borderMove 8s linear infinite;
-  pointer-events:none;
-  z-index:9999;
+/* Slide base sin borde fijo */
+.slide{
+  border: none;
+  position: relative;
+}
 
-  /* Esto crea el efecto solo en el contorno */
+/* Marco animado real */
+.slide::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  padding: 3px; /* grosor del borde */
+  border-radius: var(--r);
+
+  background: conic-gradient(
+    from var(--angle),
+    rgba(47,107,255,.8),
+    rgba(47,230,214,.9),
+    rgba(22,199,183,.8),
+    rgba(47,107,255,.8)
+  );
+
+  pointer-events:none;
+
+  /* Solo mostrar el contorno */
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
+
+  animation: borderSpin 6s linear infinite;
 }
 
-@keyframes borderMove{
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Variable animada */
+@property --angle{
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--ink);
-      background: var(--bg);
-      overflow-x:hidden;
-    }
+@keyframes borderSpin{
+  to{
+    --angle: 360deg;
+  }
+}
+
 
     /* subtle background accents */
     .bg-accent{
