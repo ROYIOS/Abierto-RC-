@@ -200,18 +200,34 @@ body::before{
   content:"";
   position:absolute;
   inset:0;
-  padding:2px; /* grosor del borde */
+  padding: 2px;              /* grosor del borde (2–4px recomendado) */
   border-radius: var(--r);
-  background: linear-gradient(
-    120deg,
-    rgba(47,107,255,.7),
-    rgba(47,230,214,.9),
-    rgba(22,199,183,.7),
-    rgba(47,107,255,.7)
+  background: conic-gradient(
+    from 0deg,
+    rgba(47,107,255,.75),
+    rgba(47,230,214,.95),
+    rgba(22,199,183,.80),
+    rgba(47,107,255,.75)
   );
-  background-size: 300% 300%;
-  animation: slideBorderMove 8s linear infinite;
+  animation: slideRing 6s linear infinite;
   pointer-events:none;
+
+  /* Muestra solo el marco (hueco por dentro) */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+@keyframes slideRing{
+  to { transform: rotate(360deg); }
+}
+
+/* Opcional: accesibilidad */
+@media (prefers-reduced-motion: reduce){
+  .slide::before{ animation: none; }
+}
 
   /* Esto deja solo el contorno visible */
   -webkit-mask:
