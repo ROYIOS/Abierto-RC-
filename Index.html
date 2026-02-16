@@ -32,6 +32,39 @@
       --max: 1120px;
       --pad: clamp(18px, 3.2vw, 44px);
     }
+/* Animated Page Border */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  padding:2px; /* grosor del borde */
+  border-radius: 0px;
+  background: linear-gradient(
+    120deg,
+    rgba(47,107,255,.6),
+    rgba(47,230,214,.8),
+    rgba(22,199,183,.6),
+    rgba(47,107,255,.6)
+  );
+  background-size: 300% 300%;
+  animation: borderMove 8s linear infinite;
+  pointer-events:none;
+  z-index:9999;
+
+  /* Esto crea el efecto solo en el contorno */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+@keyframes borderMove{
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
@@ -482,7 +515,6 @@
       <h2>Competencia con <span class="accent">propósito</span>.</h2>
       <p>
         ABIERTO RC es un torneo enfocado en valores: respeto, excelencia, comunidad y formación.
-        Aquí el carácter pesa tanto como el marcador.
       </p>
 
       <div class="footer">
