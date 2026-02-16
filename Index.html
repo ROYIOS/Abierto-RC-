@@ -154,6 +154,25 @@
       background: linear-gradient(90deg, rgba(47,107,255,0), rgba(47,230,214,.70), rgba(47,107,255,.45), rgba(47,107,255,0));
       opacity:.9;
     }
+    /* Hero image — portada */
+.hero-image{
+  width:100%;
+  margin-top:40px;
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow: var(--shadow2);
+  background:#fff;
+}
+
+.hero-image img{
+  width:100%;
+  height:340px;
+  object-fit:cover;
+  display:block;
+  filter: saturate(.95) contrast(1.05);
+  transform: scale(1.01);
+}
 
     .glow{
       position:absolute; inset:auto -30% -40% -30%;
@@ -431,20 +450,27 @@
   <main class="wrap">
 
     <!-- 1) INICIO -->
-    <section class="slide center tight" id="inicio" aria-label="Inicio">
-      <div class="glow" aria-hidden="true"></div>
+<!-- 1) INICIO -->
+<section class="slide center tight" id="inicio" aria-label="Inicio">
+  <div class="glow" aria-hidden="true"></div>
 
-      <div class="kicker"><span class="dot"></span> torneo con valores </div>
-      <h1>ABIERTO <span class="accent">RC</span></h1>
-      <p style="margin-top:14px;font-size:22px;color:rgba(11,15,24,.82);font-weight:500">
-        Saca tus valores.
-      </p>
+  <div class="kicker"><span class="dot"></span> torneo con valores </div>
+  <h1>ABIERTO <span class="accent">RC</span></h1>
 
-      <div class="footer">
-        <span>ABIERTO RC</span>
-        <span>Deck • Light</span>
-      </div>
-    </section>
+  <p style="margin-top:14px;font-size:22px;color:rgba(11,15,24,.82);font-weight:500">
+    Saca tus valores.
+  </p>
+
+  <!-- Imagen profesional -->
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476d?auto=format&fit=crop&w=2000&q=80" alt="Cancha de pádel premium">
+  </div>
+
+  <div class="footer">
+    <span>ABIERTO RC</span>
+    <span>Deck • Light</span>
+  </div>
+</section>
 
     <!-- 2) VALORES -->
     <section class="slide center tight" id="valores" aria-label="Valores">
