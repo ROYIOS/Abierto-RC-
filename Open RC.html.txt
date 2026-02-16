@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ABIERTO RC — Padel Tournament</title>
+
+  <!-- Fonts: editorial + modern -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#071a33;          /* midnight */
+      --bg1:#0b2b52;          /* deep ocean */
+      --tq:#1ed6c3;           /* turquoise */
+      --tq2:#36f1e1;          /* aqua */
+      --w:#f4f7fa;            /* soft white */
+      --muted:rgba(244,247,250,.72);
+      --line:rgba(244,247,250,.12);
+      --glass:rgba(255,255,255,.06);
+      --shadow: 0 24px 70px rgba(0,0,0,.45);
+      --radius: 26px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--w);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 22% 30%, rgba(30,214,195,.20) 0%, rgba(30,214,195,0) 55%),
+        radial-gradient(900px 700px at 75% 25%, rgba(54,241,225,.18) 0%, rgba(54,241,225,0) 60%),
+        radial-gradient(900px 700px at 55% 85%, rgba(11,43,82,.85) 0%, rgba(7,26,51,1) 60%),
+        linear-gradient(160deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    /* subtle grain/noise overlay */
+    .grain{
+      pointer-events:none;
+      position:fixed; inset:-40%;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity:.25;
+      transform: rotate(8deg);
+    }
+
+    /* Slides container */
+    .deck{
+      width:min(1280px, 92vw);
+      margin: 44px auto 120px;
+      display:flex;
+      flex-direction:column;
+      gap: 28px;
+    }
+
+    .slide{
+      position:relative;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 46px 54px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      min-height: 620px;
+    }
+
+    /* Organic waves as SVG layer */
+    .slide .waves{
+      position:absolute;
+      inset:-1px;
+      opacity:.9;
+      filter: blur(.0px);
+      pointer-events:none;
+    }
+
+    .slide .topline{
+      position:absolute; left:0; top:0; width:100%; height:6px;
+      background: linear-gradient(90deg, rgba(30,214,195,.0), rgba(30,214,195,.85), rgba(54,241,225,.0));
+      opacity:.85;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: var(--muted);
+    }
+    .dot{
+      width:7px; height:7px; border-radius:99px;
+      background: linear-gradient(180deg, var(--tq), var(--tq2));
+      box-shadow: 0 0 18px rgba(30,214,195,.55);
+    }
+
+    h1,h2,h3{ margin: 14px 0 0; }
+    h1{
+      font-family: "Playfair Display", serif;
+      font-weight: 700;
+      font-size: clamp(44px, 5.2vw, 82px);
+      line-height: 1.02;
+      letter-spacing: -.02em;
+    }
+    h2{
+      font-family: "Playfair Display", serif;
+      font-weight: 650;
+      font-size: clamp(34px, 3.2vw, 54px);
+      letter-spacing: -.01em;
+      line-height:1.1;
+    }
+    p{
+      margin: 16px 0 0;
+      font-size: 18px;
+      line-height: 1.55;
+      color: rgba(244,247,250,.84);
+      max-width: 78ch;
+    }
+
+    .accent{
+      color: var(--tq2);
+      text-shadow: 0 0 26px rgba(54,241,225,.35);
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 26px;
+      margin-top: 26px;
+    }
+    .hero-card{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      border-radius: 22px;
+      padding: 22px 22px;
+      backdrop-filter: blur(10px);
+    }
+
+    .big-metric{
+      font-family: "Playfair Display", serif;
+      font-size: 54px;
+      line-height:1;
+      margin:0;
+    }
+    .metric-label{
+      margin-top:10px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing:.08em;
+      text-transform: uppercase;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 26px;
+    }
+    .tile{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.16);
+      border-radius: 22px;
+      padding: 18px 18px;
+      backdrop-filter: blur(10px);
+      min-height: 128px;
+    }
+    .tile h3{
+      font-size: 14px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      margin:0;
+      color: rgba(54,241,225,.95);
+    }
+    .tile p{
+      margin: 10px 0 0;
+      font-size: 16px;
+      line-height: 1.45;
+      color: rgba(244,247,250,.82);
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+    .panel{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.16);
+      border-radius: 24px;
+      padding: 22px;
+      backdrop-filter: blur(10px);
+    }
+    .panel .title{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    .badge{
+      font-size: 11px;
+      letter-spacing:.18em;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(54,241,225,.30);
+      color: rgba(244,247,250,.86);
+      background: rgba(54,241,225,.10);
+    }
+    .panel h3{
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-size: 26px;
+      letter-spacing: -.01em;
+    }
+    .list{
+      margin: 14px 0 0;
+      padding:0;
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .list li{
+      display:flex; gap:12px; align-items:flex-start;
+      color: rgba(244,247,250,.84);
+      font-size: 16px;
+      line-height:1.45;
+    }
+    .check{
+      width:18px; height:18px; flex:0 0 18px;
+      border-radius: 6px;
+      background: linear-gradient(180deg, rgba(30,214,195,.95), rgba(54,241,225,.75));
+      box-shadow: 0 0 22px rgba(30,214,195,.35);
+      margin-top:2px;
+    }
+
+    .center{
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+    }
+    .center p{ max-width: 66ch; }
+
+    .footer{
+      position:absolute;
+      bottom:22px;
+      left:54px;
+      right:54px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color: rgba(244,247,250,.55);
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform: uppercase;
+    }
+
+    .navhint{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:18px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(244,247,250,.15);
+      background: rgba(0,0,0,.22);
+      backdrop-filter: blur(10px);
+      color: rgba(244,247,250,.75);
+      font-size: 12px;
+      letter-spacing:.08em;
+    }
+
+    @media (max-width: 960px){
+      .slide{ padding: 34px 26px; min-height: 640px; }
+      .footer{ left:26px; right:26px; }
+      .grid{ grid-template-columns: 1fr; }
+      .hero-grid{ grid-template-columns: 1fr; }
+      .two-col{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grain"></div>
+
+  <main class="deck" id="deck">
+
+    <!-- SLIDE 1: HERO -->
+    <section class="slide" data-title="Hero">
+      <div class="topline"></div>
+      <svg class="waves" viewBox="0 0 1440 810" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#1ed6c3" stop-opacity=".18"/>
+            <stop offset=".55" stop-color="#36f1e1" stop-opacity=".10"/>
+            <stop offset="1" stop-color="#071a33" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="1" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#0f3a66" stop-opacity=".55"/>
+            <stop offset=".65" stop-color="#0b2b52" stop-opacity=".18"/>
+            <stop offset="1" stop-color="#071a33" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,540 C220,470 390,610 580,560 C800,500 960,370 1140,420 C1280,460 1360,520 1440,460 L1440,810 L0,810 Z" fill="url(#g2)"/>
+        <path d="M0,620 C260,560 420,720 640,660 C860,600 960,500 1120,520 C1260,540 1340,620 1440,560 L1440,810 L0,810 Z" fill="url(#g1)"/>
+      </svg>
+
+      <div class="kicker"><span class="dot"></span> Torneo nacional aspiracional • valores RC</div>
+      <h1>ABIERTO <span class="accent">RC</span></h1>
+      <p style="margin-top:10px;font-size:20px;color:rgba(244,247,250,.9)">
+        Pádel con identidad. Competencia con propósito. Experiencia premium y espiritual.
+      </p>
+
+      <div class="hero-grid">
+        <div class="hero-card">
+          <p class="big-metric"><span class="accent">59</span> parejas</p>
+          <div class="metric-label">capacidad máxima estimada (partidos 60 min)</div>
+          <p style="margin-top:14px">
+            Cupo recomendado premium: <span class="accent">48</span> parejas (operación impecable, descansos y final digna).
+          </p>
+        </div>
+
+        <div class="hero-card">
+          <div class="metric-label">horarios clave</div>
+          <p style="margin-top:10px">
+            Viernes: 6:00–8:00 PM (último inicio 8:00) <br/>
+            Sábado: 8:00 AM–8:00 PM (último inicio 8:00) <br/>
+            Final: Domingo 12:00 PM
+          </p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>ABIERTO RC</span>
+        <span>Executive Deck</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: MANIFIESTO -->
+    <section class="slide center" data-title="Manifiesto">
+      <div class="topline"></div>
+      <svg class="waves" viewBox="0 0 1440 810" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="m1" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#36f1e1" stop-opacity=".12"/>
+            <stop offset=".6" stop-color="#1ed6c3" stop-opacity=".08"/>
+            <stop offset="1" stop-color="#071a33" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,610 C320,520 520,700 760,620 C980,550 1100,450 1440,520 L1440,810 L0,810 Z" fill="url(#m1)"/>
+      </svg>
+
+      <div class="kicker"><span class="dot"></span> identidad espiritual + excelencia deportiva</div>
+      <h2>Competimos para <span class="accent">formar</span>.</h2>
+      <p>
+        ABIERTO RC nace para elevar la manera de competir: respeto, comunidad, excelencia y fe.
+        Aquí el carácter pesa tanto como el marcador.
+      </p>
+
+      <div class="footer">
+        <span>Manifiesto</span>
+        <span>ABIERTO RC</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: COMITÉ -->
+    <section class="slide" data-title="Comité">
+      <div class="topline"></div>
+      <svg class="waves" viewBox="0 0 1440 810" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="c1" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#0f3a66" stop-opacity=".55"/>
+            <stop offset=".55" stop-color="#1ed6c3" stop-opacity=".10"/>
+            <stop offset="1" stop-color="#071a33" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,560 C260,480 520,660 760,570 C980,490 1120,420 1440,470 L1440,810 L0,810 Z" fill="url(#c1)"/>
+      </svg>
+
+      <div class="kicker"><span class="dot"></span> comité del torneo</div>
+      <h2>Gobernanza clara. Ejecución impecable.</h2>
+      <p>Roles definidos para sostener un estándar nacional aspiracional.</p>
+
+      <div class="grid">
+        <div class="tile">
+          <h3>Mística</h3>
+          <p>Formación, identidad RC y acompañamiento espiritual.</p>
+        </div>
+        <div class="tile">
+          <h3>Deportivo</h3>
+          <p>Formato, arbitraje, programación y control de competencia.</p>
+        </div>
+        <div class="tile">
+          <h3>Patrocinadores</h3>
+          <p>Alianzas, activaciones de marca y paquetes comerciales.</p>
+        </div>
+        <div class="tile">
+          <h3>Staff</h3>
+          <p>Operación en cancha, mesa de control y soporte al flujo.</p>
+        </div>
+        <div class="tile">
+          <h3>Logística</h3>
+          <p>Sedes, señalización, montaje, seguridad y timing.</p>
+        </div>
+        <div class="tile">
+          <h3>Atención al jugador</h3>
+          <p>Registro, comunicación, hospitalidad y seguimiento.</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Comité</span>
+        <span>ABIERTO RC</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: SEDES -->
+    <section class="slide" data-title="Sedes">
+      <div class="topline"></div>
+      <svg class="waves" viewBox="0 0 1440 810" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="s1" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#36f1e1" stop-opacity=".11"/>
+            <stop offset=".6" stop-color="#0f3a66" stop-opacity=".40"/>
+            <stop offset="1" stop-color="#071a33" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,620 C340,540 520,700 800,620 C1060,540 1200,520 1440,560 L1440,810 L0,810 Z" fill="url(#s1)"/>
+      </svg>
+
+      <div class="kicker"><span class="dot"></span> sedes del torneo</div>
+      <h2>Elegir sede es elegir <span class="accent">posicionamiento</span>.</h2>
+      <p>Dos rutas: especialización deportiva o experiencia premium institucional.</p>
+
+      <div class="two-col">
+        <div class="panel">
+          <div class="title">
+            <h3>Clubes de Pádel</h3>
+            <span class="badge">Opción 1</span>
+          </div>
+          <ul class="list">
+            <li><span class="check"></span>Ambiente competitivo especializado</li>
+            <li><span class="check"></span>Alta disponibilidad de canchas</li>
+            <li><span class="check"></span>Operación 100% enfocada en pádel</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <div class="title">
+            <h3>Clubes deportivos</h3>
+            <span class="badge">Opción 2</span>
+          </div>
+          <ul class="list">
+            <li><span class="check"></span>Campestre / La Loma (prestigio)</li>
+            <li><span class="check"></span>Experiencia social premium</li>
+            <li><span class="check"></span>Mejor plataforma para patrocinadores</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Sedes</span>
+        <span>ABIERTO RC</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: INAUGURACIÓN -->
+    <section class="slide center" data-title="Inauguración">
+      <div class="topline"></div>
+      <svg class="waves" viewBox="0 0 1440 810" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <radialGradient id="i1" cx="50%" cy="35%" r="60%">
+            <stop offset="0" stop-color="#36f1e1" stop-opacity=".18"/>
+            <stop offset=".45" stop-color="#1ed6c3" stop-opacity=".08"/>
+            <stop offset="1" stop-color="#071a33" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="1440" height="810" fill="url(#i1)"/>
+      </svg>
+
+      <div class="kicker"><span class="dot"></span> inauguración</div>
+      <h2>Hora Eucarística <span class="accent">Magna</span></h2>
+      <p>
+        Diferencial del ABIERTO RC: apertura espiritual del torneo y alineación con los valores RC.
+        Un inicio con intención antes de la competencia.
+      </p>
+
+      <div class="footer">
+        <span>Inauguración</span>
+        <span>ABIERTO RC</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: PREMIOS -->
+    <section class="slide" data-title="Premios">
+      <div class="topline"></div>
+      <svg class="waves" viewBox="0 0 1440 810" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="p1" x1="0" x2="1" y1="1" y2="0">
+            <stop offset="0" stop-color="#0f3a66" stop-opacity=".60"/>
+            <stop offset=".55" stop-color="#36f1e1" stop-opacity=".10"/>
+            <stop offset="1" stop-color="#071a33" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,640 C260,560 520,720 760,650 C1000,580 1180,520 1440,580 L1440,810 L0,810 Z" fill="url(#p1)"/>
+      </svg>
+
+      <div class="kicker"><span class="dot"></span> premios</div>
+      <h2>Reconocer <span class="accent">resultado</span> y <span class="accent">carácter</span>.</h2>
+      <p>Premiación diseñada para reforzar el estándar competitivo y los valores RC.</p>
+
+      <div class="two-col">
+        <div class="panel">
+          <div class="title">
+            <h3>Deportivo</h3>
+            <span class="badge">podio</span>
+          </div>
+          <ul class="list">
+            <li><span class="check"></span>🏆 Campeones — Trofeo oficial ABIERTO RC</li>
+            <li><span class="check"></span>🥈 Subcampeones — Reconocimiento premium</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <div class="title">
+            <h3>Valores</h3>
+            <span class="badge">RC</span>
+          </div>
+          <ul class="list">
+            <li><span class="check"></span>✨ Fair Play RC — premio especial</li>
+            <li><span class="check"></span>Premios de patrocinadores — experiencias / vouchers</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Premios</span>
+        <span>ABIERTO RC</span>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="navhint">Tip: usa Ctrl/Cmd + P para exportar a PDF • o presiona ← / → para saltar por “slides”</div>
+
+  <script>
+    // Simple keyboard navigation: left/right jumps between slides
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let idx = 0;
+
+    function go(i){
+      idx = Math.max(0, Math.min(slides.length-1, i));
+      slides[idx].scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight' || e.key === 'PageDown') go(idx+1);
+      if(e.key === 'ArrowLeft'  || e.key === 'PageUp')   go(idx-1);
+      if(e.key.toLowerCase() === 'home') go(0);
+      if(e.key.toLowerCase() === 'end') go(slides.length-1);
+    });
+  </script>
+</body>
+</html>
