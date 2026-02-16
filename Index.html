@@ -216,6 +216,15 @@
       justify-content:center;
       align-items:center;
     }
+    /* Slide variant: same look, but aligns content to top (avoids "vertical" feel) */
+.top{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;  /* key change */
+  align-items: center;
+  padding-top: calc(var(--pad) + 14px);
+}
     .tight p{ max-width: 62ch; }
 
     /* Apple cards */
@@ -608,16 +617,14 @@
   </div>
 </section>
 
-    <!-- 7) PREMIOS -->
-<!-- 7) PREMIOS -->
-<section class="slide center tight" id="premios" aria-label="Premios">
+   <!-- 7) PREMIOS -->
+<section class="slide top tight" id="premios" aria-label="Premios">
   <div class="glow" aria-hidden="true"></div>
 
   <div class="kicker"><span class="dot"></span> premios</div>
   <h2>Bolsa de premios</h2>
 
-  <div style="margin-top:30px; padding:40px; border-radius:28px; border:1px solid var(--line); background:rgba(255,255,255,.92); box-shadow:var(--shadow2); max-width:520px; width:100%;">
-    
+  <div style="margin-top:26px; padding:38px; border-radius:28px; border:1px solid var(--line); background:rgba(255,255,255,.92); box-shadow:var(--shadow2); max-width:520px; width:100%;">
     <div style="font-size:16px; letter-spacing:.12em; text-transform:uppercase; color:rgba(11,15,24,.55);">
       Total
     </div>
@@ -629,7 +636,6 @@
     <div style="margin-top:6px; font-size:14px; color:rgba(11,15,24,.55);">
       MXN
     </div>
-
   </div>
 
   <div class="footer">
@@ -637,9 +643,6 @@
     <span>ABIERTO RC</span>
   </div>
 </section>
-  </main>
-
-  <script>
     // Top button
     document.getElementById('topBtn')?.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
