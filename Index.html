@@ -12,7 +12,6 @@
 
   <style>
     :root{
-      /* Apple-ish light system */
       --bg:#ffffff;
       --ink:#0b0f18;
       --muted:rgba(11,15,24,.62);
@@ -20,7 +19,6 @@
       --line:rgba(11,15,24,.10);
       --line2:rgba(11,15,24,.08);
 
-      /* Accent */
       --tq:#16c7b7;
       --aqua:#2fe6d6;
       --blue:#2f6bff;
@@ -32,55 +30,16 @@
       --max: 1120px;
       --pad: clamp(18px, 3.2vw, 44px);
     }
-/* Animated Page Border */
 
-/* Slide base sin borde fijo */
-.slide{
-  border: none;
-  position: relative;
-}
-
-/* Marco animado real */
-.slide::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  padding: 3px; /* grosor del borde */
-  border-radius: var(--r);
-
-  background: conic-gradient(
-    from var(--angle),
-    rgba(47,107,255,.8),
-    rgba(47,230,214,.9),
-    rgba(22,199,183,.8),
-    rgba(47,107,255,.8)
-  );
-
-  pointer-events:none;
-
-  /* Solo mostrar el contorno */
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-
-  animation: borderSpin 6s linear infinite;
-}
-
-/* Variable animada */
-@property --angle{
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes borderSpin{
-  to{
-    --angle: 360deg;
-  }
-}
-
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background: var(--bg);
+      overflow-x:hidden;
+    }
 
     /* subtle background accents */
     .bg-accent{
@@ -173,10 +132,9 @@
       gap: 18px;
     }
 
-    /* Slide */
+    /* Slide base */
     .slide{
       position:relative;
-      border:1px solid var(--line);
       border-radius: var(--r);
       background: rgba(255,255,255,.75);
       box-shadow: var(--shadow);
@@ -184,99 +142,84 @@
       padding: calc(var(--pad) + 4px);
       min-height: 620px;
       scroll-margin-top: 110px;
+      border: 1px solid rgba(11,15,24,.08); /* fallback si el pseudo-element no carga */
     }
-    /* Animated slide border */
 
-.slide{
-  position:relative;
-  border-radius: var(--r);
-  background: rgba(255,255,255,.75);
-  box-shadow: var(--shadow);
-  overflow:hidden;
-  padding: calc(var(--pad) + 4px);
-  min-height: 620px;
-  scroll-margin-top: 110px;
-  
-  /* quitamos el borde normal */
-  border: none;
-}
-
-/* Borde animado */
-.slide::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  padding: 2px;              /* grosor del borde (2–4px recomendado) */
-  border-radius: var(--r);
-  background: conic-gradient(
-    from 0deg,
-    rgba(47,107,255,.75),
-    rgba(47,230,214,.95),
-    rgba(22,199,183,.80),
-    rgba(47,107,255,.75)
-  );
-  animation: slideRing 6s linear infinite;
-  pointer-events:none;
-
-  /* Muestra solo el marco (hueco por dentro) */
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-}
-
-@keyframes slideRing{
-  to { transform: rotate(360deg); }
-}
-
-/* Opcional: accesibilidad */
-@media (prefers-reduced-motion: reduce){
-  .slide::before{ animation: none; }
-}
-
-  /* Esto deja solo el contorno visible */
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-}
-
-@keyframes slideBorderMove{
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
+    /* ✅ Animated border around slide (flow around edges, NOT spinning) */
     .slide::before{
       content:"";
       position:absolute;
-      left:0; top:0;
-      width:100%; height:4px;
-      background: linear-gradient(90deg, rgba(47,107,255,0), rgba(47,230,214,.70), rgba(47,107,255,.45), rgba(47,107,255,0));
-      opacity:.9;
+      inset:0;
+      padding: 3px;              /* grosor del borde */
+      border-radius: var(--r);
+      pointer-events:none;
+
+      /* 4 lados con gradientes animados (simula recorrido por el contorno) */
+      background:
+        /* TOP */
+        linear-gradient(90deg,
+          rgba(47,107,255,.0) 0%,
+          rgba(47,107,255,.75) 20%,
+          rgba(47,230,214,.90) 50%,
+          rgba(22,199,183,.75) 70%,
+          rgba(47,107,255,.0) 100%
+        ) 0% 0% / 220% 3px no-repeat,
+
+        /* RIGHT */
+        linear-gradient(180deg,
+          rgba(47,107,255,.0) 0%,
+          rgba(47,107,255,.75) 20%,
+          rgba(47,230,214,.90) 50%,
+          rgba(22,199,183,.75) 70%,
+          rgba(47,107,255,.0) 100%
+        ) 100% 0% / 3px 220% no-repeat,
+
+        /* BOTTOM */
+        linear-gradient(90deg,
+          rgba(47,107,255,.0) 0%,
+          rgba(47,107,255,.75) 20%,
+          rgba(47,230,214,.90) 50%,
+          rgba(22,199,183,.75) 70%,
+          rgba(47,107,255,.0) 100%
+        ) 100% 100% / 220% 3px no-repeat,
+
+        /* LEFT */
+        linear-gradient(180deg,
+          rgba(47,107,255,.0) 0%,
+          rgba(47,107,255,.75) 20%,
+          rgba(47,230,214,.90) 50%,
+          rgba(22,199,183,.75) 70%,
+          rgba(47,107,255,.0) 100%
+        ) 0% 100% / 3px 220% no-repeat;
+
+      animation: slideEdgeFlow 8s linear infinite;
+
+      /* Solo marco visible */
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
     }
-    /* Hero image — portada */
-.hero-image{
-  width:100%;
-  margin-top:40px;
-  border-radius:28px;
-  overflow:hidden;
-  border:1px solid var(--line);
-  box-shadow: var(--shadow2);
-  background:#fff;
-}
 
-.hero-image img{
-  width:100%;
-  height:340px;
-  object-fit:cover;
-  display:block;
-  filter: saturate(.95) contrast(1.05);
-  transform: scale(1.01);
-}
+    @keyframes slideEdgeFlow{
+      0%{
+        background-position:
+          0% 0%,
+          100% 0%,
+          100% 100%,
+          0% 100%;
+      }
+      100%{
+        background-position:
+          220% 0%,
+          100% 220%,
+          -220% 100%,
+          0% -220%;
+      }
+    }
 
+    /* subtle corner glow */
     .glow{
       position:absolute; inset:auto -30% -40% -30%;
       height: 420px;
@@ -337,16 +280,6 @@
     }
     .tight p{ max-width: 62ch; }
 
-    /* Top-aligned slide content (fix for "vertical") */
-    .top{
-      text-align:center;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-start;
-      align-items:center;
-      padding-top: calc(var(--pad) + 4px);
-    }
-
     /* Cards */
     .row{
       display:grid;
@@ -381,10 +314,6 @@
       font-weight: 700;
       position:relative; z-index:1;
     }
-    .highlight-cost{
-  border:1px solid rgba(22,199,183,.35);
-  box-shadow: 0 0 0 1px rgba(22,199,183,.15) inset, var(--shadow2);
-}
     .metric{
       margin: 10px 0 0;
       font-size: 54px;
@@ -394,7 +323,6 @@
       position:relative;
       z-index:1;
     }
-    .metric .accent{ font-weight: 780; }
     .label{
       margin-top: 10px;
       font-size: 12px;
@@ -428,14 +356,20 @@
       box-shadow: var(--shadow2);
       padding: 16px;
     }
+
+    /* ✅ Comité titles with RC palette */
     .tile h3{
       margin:0;
       font-size: 13px;
       letter-spacing:.18em;
       text-transform: uppercase;
-      color: rgba(11,15,24,.68);
-      font-weight: 750;
+      font-weight: 800;
+      background: linear-gradient(90deg, rgba(22,199,183,.95), rgba(47,107,255,.95));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
     }
+
     .tile p{
       margin: 10px 0 0;
       font-size: 16px;
@@ -500,6 +434,12 @@
       box-shadow: 0 0 0 1px rgba(47,107,255,.10) inset, var(--shadow2);
     }
 
+    /* Highlight cost blocks */
+    .highlight-cost{
+      border:1px solid rgba(22,199,183,.35);
+      box-shadow: 0 0 0 1px rgba(22,199,183,.15) inset, var(--shadow2);
+    }
+
     /* Footer */
     .footer{
       position:absolute;
@@ -524,6 +464,11 @@
       .compare{ grid-template-columns: 1fr; }
       .slide{ min-height: 680px; }
     }
+
+    /* Optional: accessibility */
+    @media (prefers-reduced-motion: reduce){
+      .slide::before{ animation: none; }
+    }
   </style>
 </head>
 
@@ -544,6 +489,7 @@
       <a href="#comite">Comités</a>
       <a href="#capacidad">Capacidad</a>
       <a href="#sedes">Sedes</a>
+      <a href="#costos">Costos</a>
       <a href="#premios">Premios</a>
     </div>
 
@@ -552,30 +498,29 @@
 
   <main class="wrap">
 
-<!-- 1) INICIO -->
-<section class="slide center tight" id="inicio" aria-label="Inicio">
-  <div class="glow" aria-hidden="true"></div>
+    <!-- 1) INICIO (sin imagen) -->
+    <section class="slide center tight" id="inicio" aria-label="Inicio">
+      <div class="glow" aria-hidden="true"></div>
 
-  <div class="kicker">
-    <span class="dot"></span> torneo con valores
-  </div>
+      <div class="kicker">
+        <span class="dot"></span> torneo con valores
+      </div>
 
-  <h1>
-    ABIERTO <span class="accent">RC</span>
-  </h1>
+      <h1>ABIERTO <span class="accent">RC</span></h1>
 
-  <p style="margin-top:18px; font-size:22px; color:rgba(11,15,24,.82); font-weight:500;">
-    Saca tus valores.
-  </p>
+      <p style="margin-top:18px; font-size:22px; color:rgba(11,15,24,.82); font-weight:500;">
+        Saca tus valores.
+      </p>
 
-  <p style="margin-top:8px; font-size:16px; color:rgba(11,15,24,.55); letter-spacing:.04em;">
-   
+      <p style="margin-top:8px; font-size:16px; color:rgba(11,15,24,.55); letter-spacing:.04em;">
+        Competencia • Comunidad • Formación
+      </p>
 
-  <div class="footer">
-    <span>ABIERTO RC</span>
-    <span>Deck • Light</span>
-  </div>
-</section>
+      <div class="footer">
+        <span>ABIERTO RC</span>
+        <span>Deck • Light</span>
+      </div>
+    </section>
 
     <!-- 2) VALORES -->
     <section class="slide center tight" id="valores" aria-label="Valores">
@@ -585,6 +530,7 @@
       <h2>Competencia con <span class="accent">propósito</span>.</h2>
       <p>
         ABIERTO RC es un torneo enfocado en valores: respeto, excelencia, comunidad y formación.
+        Aquí el carácter pesa tanto como el marcador.
       </p>
 
       <div class="footer">
@@ -597,7 +543,7 @@
     <section class="slide center tight" id="hora-santa" aria-label="Mega Hora Santa">
       <div class="glow" aria-hidden="true"></div>
 
-      <div class="kicker"><span class="dot"></span> </div>
+      <div class="kicker"><span class="dot"></span> anuncio</div>
       <h2><span class="accent">Mega Hora Santa</span></h2>
       <p>
         Inicio espiritual del torneo. Un momento central para alinear la competencia con el propósito y los valores RC.
@@ -615,7 +561,8 @@
 
       <div class="kicker"><span class="dot"></span> organización</div>
       <h2>Comités</h2>
-      <p class="muted" style="max-width:78ch">
+      <p style="max-width:78ch;color:rgba(11,15,24,.62)">
+        Estructura clara para sostener un estándar aspiracional y una experiencia consistente.
       </p>
 
       <div class="grid">
@@ -662,22 +609,22 @@
         <div class="card">
           <h3>Parejas</h3>
           <div class="metric"><span class="accent">44</span></div>
-          <div class="label">cupo maximo</div>
-          <div class="small"></div>
+          <div class="label">cupo total</div>
+          <div class="small">Formato recomendado para operación limpia y experiencia premium.</div>
         </div>
 
         <div class="card">
           <h3>Jugadores</h3>
           <div class="metric"><span class="accent">88</span></div>
           <div class="label">participantes</div>
-          <div class="small">Doble varonil/mixto/femenil según categorías definidas.</div>
+          <div class="small">3 categorías con fase de grupos + eliminatoria.</div>
         </div>
 
         <div class="card">
           <h3>Categorías</h3>
           <div class="metric"><span class="accent">3</span></div>
           <div class="label">niveles</div>
-          <div class="small">A definir por comite deportivo</div>
+          <div class="small">Estructura clara para competitividad y orden.</div>
         </div>
 
         <div class="card">
@@ -728,13 +675,13 @@
         </div>
       </div>
 
-      <!-- Recursos bajados aquí -->
+      <!-- Recursos -->
       <div class="row" style="margin-top:28px; max-width:720px;">
         <div class="card">
           <h3>Recursos</h3>
           <div class="metric"><span class="accent">4</span></div>
           <div class="label">canchas disponibles</div>
-          <div class="small">Operación viernes, sábado y final domingo 12:00 PM.</div>
+          <div class="small">Ventana: viernes 6–9 PM, sábado 8 AM–8 PM, domingo 9 AM–2 PM (finales el domingo).</div>
         </div>
       </div>
 
@@ -744,140 +691,110 @@
       </div>
     </section>
 
+    <!-- 8) COSTOS -->
+    <section class="slide" id="costos" aria-label="Costos del torneo">
+      <div class="glow" aria-hidden="true"></div>
+
+      <div class="kicker"><span class="dot"></span> estructura financiera</div>
+      <h2>Costos & Rentabilidad del Torneo</h2>
+
+      <!-- INGRESOS + UTILIDAD -->
+      <div class="row" style="margin-top:40px;">
+        <div class="card highlight-cost">
+          <h3>Inscripciones</h3>
+          <div class="metric"><span class="accent">$83,600</span></div>
+          <div class="label">88 jugadores × $950</div>
+        </div>
+
+        <div class="card highlight-cost">
+          <h3>Utilidad estimada</h3>
+          <div class="metric"><span class="accent">$59,100</span></div>
+          <div class="label">Modelo con patrocinadores estratégicos</div>
+        </div>
+      </div>
+
+      <!-- COSTOS -->
+      <div class="grid" style="margin-top:40px;">
+        <div class="tile highlight-cost">
+          <h3>Pelotas</h3>
+          <p><strong class="accent">$3,240</strong><br>27 botes × $120</p>
+        </div>
+
+        <div class="tile highlight-cost">
+          <h3>Kit inicial</h3>
+          <p><strong class="accent">$13,200</strong><br>88 jugadores × $150</p>
+        </div>
+
+        <div class="tile highlight-cost">
+          <h3>Canchas (4)</h3>
+          <p><strong class="accent">$32,400</strong><br>81 partidos × 1h × $400</p>
+        </div>
+
+        <div class="tile highlight-cost">
+          <h3>Premios</h3>
+          <p><strong class="accent">$40,000</strong><br>Bolsa total</p>
+        </div>
+
+        <div class="tile highlight-cost">
+          <h3>Trofeos</h3>
+          <p><strong class="accent">$4,000</strong></p>
+        </div>
+
+        <div class="tile">
+          <h3>Publicidad</h3>
+          <p>$3,000</p>
+        </div>
+
+        <div class="tile">
+          <h3>Sonido</h3>
+          <p>$7,500</p>
+        </div>
+
+        <div class="tile">
+          <h3>Staff (Alimentos)</h3>
+          <p>$8,000</p>
+        </div>
+
+        <div class="tile">
+          <h3>Lonas</h3>
+          <p>$6,000</p>
+        </div>
+      </div>
+
+      <!-- TOTAL COSTOS -->
+      <div style="margin-top:50px; text-align:center;">
+        <div style="font-size:16px; letter-spacing:.12em; text-transform:uppercase; color:rgba(11,15,24,.55);">
+          Total costos del evento
+        </div>
+        <div style="margin-top:10px; font-size:64px; font-weight:800;">
+          <span class="accent">$116,972</span>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Costos</span>
+        <span>ABIERTO RC</span>
+      </div>
+    </section>
+
     <!-- 7) PREMIOS -->
-    <section class="slide top tight" id="premios" aria-label="Premios">
+    <section class="slide center tight" id="premios" aria-label="Premios">
       <div class="glow" aria-hidden="true"></div>
 
       <div class="kicker"><span class="dot"></span> premios</div>
       <h2>Bolsa de premios</h2>
 
-      <div style="margin-top:22px; padding:36px; border-radius:28px; border:1px solid var(--line); background:rgba(255,255,255,.92); box-shadow:var(--shadow2); max-width:520px; width:100%;">
-        <div style="font-size:16px; letter-spacing:.12em; text-transform:uppercase; color:rgba(11,15,24,.55);">
-          Total
-        </div>
-
-        <div style="margin-top:10px; font-size:72px; font-weight:800; letter-spacing:-.05em;">
-          <span class="accent">$40,000</span>
-        </div>
-
-        <div style="margin-top:6px; font-size:14px; color:rgba(11,15,24,.55);">
-          MXN
-        </div>
+      <p style="margin-top:10px;font-size:18px;color:rgba(11,15,24,.62)">Total</p>
+      <div style="margin-top:6px;font-size:64px;letter-spacing:-.04em;font-weight:800">
+        <span class="accent">$40,000</span>
       </div>
+      <p style="margin-top:10px;color:rgba(11,15,24,.62)">MXN</p>
 
       <div class="footer">
         <span>Premios</span>
         <span>ABIERTO RC</span>
       </div>
     </section>
-
-    <!-- 8) COSTOS -->
-<!-- 8) COSTOS -->
-<section class="slide" id="costos" aria-label="Costos del torneo">
-  <div class="glow" aria-hidden="true"></div>
-
-  <div class="kicker"><span class="dot"></span> estructura financiera</div>
-  <h2>Costos & Rentabilidad del Torneo</h2>
-
-  <!-- INGRESOS + UTILIDAD -->
-  <div class="row" style="margin-top:40px;">
-    
-    <div class="card highlight-cost">
-      <h3>Inscripciones</h3>
-      <div class="metric"><span class="accent">$83,600</span></div>
-      <div class="label">88 jugadores × $950</div>
-    </div>
-
-    <div class="card highlight-cost">
-      <h3>Utilidad estimada</h3>
-      <div class="metric"><span class="accent">$59,100</span></div>
-      <div class="label">Modelo con patrocinadores estratégicos</div>
-    </div>
-
-  </div>
-
-  <!-- COSTOS -->
-  <div class="grid" style="margin-top:40px;">
-
-    <div class="tile highlight-cost">
-      <h3>Pelotas</h3>
-      <p>
-        <strong class="accent">$3,240</strong><br>
-        27 botes × $120
-      </p>
-    </div>
-
-    <div class="tile highlight-cost">
-      <h3>Kit inicial</h3>
-      <p>
-        <strong class="accent">$13,200</strong><br>
-        88 jugadores × $150
-      </p>
-    </div>
-
-    <div class="tile highlight-cost">
-      <h3>Canchas (4)</h3>
-      <p>
-        <strong class="accent">$32,400</strong><br>
-        81 partidos × 1h × $400
-      </p>
-    </div>
-
-    <div class="tile highlight-cost">
-      <h3>Premios</h3>
-      <p>
-        <strong class="accent">$40,000</strong><br>
-        Bolsa total
-      </p>
-    </div>
-
-    <div class="tile highlight-cost">
-      <h3>Trofeos</h3>
-      <p>
-        <strong class="accent">$4,000</strong>
-      </p>
-    </div>
-
-    <div class="tile">
-      <h3>Publicidad</h3>
-      <p>$3,000</p>
-    </div>
-
-    <div class="tile">
-      <h3>Sonido</h3>
-      <p>$7,500</p>
-    </div>
-
-    <div class="tile">
-      <h3>Staff (Alimentos)</h3>
-      <p>$8,000</p>
-    </div>
-
-    <div class="tile">
-      <h3>Lonas</h3>
-      <p>$6,000</p>
-    </div>
-
-  </div>
-
-  <!-- TOTAL COSTOS -->
-  <div style="margin-top:50px; text-align:center;">
-    
-    <div style="font-size:16px; letter-spacing:.12em; text-transform:uppercase; color:rgba(11,15,24,.55);">
-      Total costos del evento
-    </div>
-
-    <div style="margin-top:10px; font-size:64px; font-weight:800;">
-      <span class="accent">$116,972</span>
-    </div>
-
-  </div>
-
-  <div class="footer">
-    <span>Costos</span>
-    <span>ABIERTO RC</span>
-  </div>
-</section>
 
   </main>
 
@@ -887,7 +804,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Keyboard slide navigation (←/→)
+    // Keyboard slide navigation
     const slides = Array.from(document.querySelectorAll('.slide'));
     let idx = 0;
 
@@ -919,3 +836,4 @@
   </script>
 </body>
 </html>
+
