@@ -179,6 +179,54 @@ body::before{
       min-height: 620px;
       scroll-margin-top: 110px;
     }
+    /* Animated slide border */
+
+.slide{
+  position:relative;
+  border-radius: var(--r);
+  background: rgba(255,255,255,.75);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  padding: calc(var(--pad) + 4px);
+  min-height: 620px;
+  scroll-margin-top: 110px;
+  
+  /* quitamos el borde normal */
+  border: none;
+}
+
+/* Borde animado */
+.slide::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  padding:2px; /* grosor del borde */
+  border-radius: var(--r);
+  background: linear-gradient(
+    120deg,
+    rgba(47,107,255,.7),
+    rgba(47,230,214,.9),
+    rgba(22,199,183,.7),
+    rgba(47,107,255,.7)
+  );
+  background-size: 300% 300%;
+  animation: slideBorderMove 8s linear infinite;
+  pointer-events:none;
+
+  /* Esto deja solo el contorno visible */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+@keyframes slideBorderMove{
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
     .slide::before{
       content:"";
       position:absolute;
