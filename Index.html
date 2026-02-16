@@ -3,28 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ABIERTO RC — Padel Tournament</title>
+  <title>ABIERTO RC — Saca tus valores</title>
 
-  <!-- Typography: modern Apple-like (Inter) + editorial accent (Playfair) -->
+  <!-- Apple-like: clean sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg0:#06162b;            /* deep midnight */
-      --bg1:#0a2650;            /* deep ocean */
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.04);
-      --stroke:rgba(255,255,255,.12);
-      --stroke2:rgba(54,241,225,.22);
-      --text:#f4f7fa;
-      --muted:rgba(244,247,250,.72);
-      --muted2:rgba(244,247,250,.58);
-      --tq:#1ed6c3;
-      --aqua:#36f1e1;
-      --shadow: 0 28px 80px rgba(0,0,0,.48);
-      --radius: 28px;
+      /* Apple-ish light system */
+      --bg:#ffffff;
+      --ink:#0b0f18;
+      --muted:rgba(11,15,24,.62);
+      --muted2:rgba(11,15,24,.48);
+      --line:rgba(11,15,24,.10);
+      --line2:rgba(11,15,24,.08);
+
+      /* Accent (keep your turquoise/blue, but subtle) */
+      --tq:#16c7b7;
+      --aqua:#2fe6d6;
+      --blue:#2f6bff;
+
+      --shadow: 0 24px 60px rgba(11,15,24,.10);
+      --shadow2: 0 14px 36px rgba(11,15,24,.08);
+      --r:28px;
+
       --max: 1120px;
       --pad: clamp(18px, 3.2vw, 44px);
     }
@@ -33,191 +37,178 @@
     html,body{ height:100%; }
     body{
       margin:0;
-      color:var(--text);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(1200px 860px at 22% 28%, rgba(30,214,195,.22) 0%, rgba(30,214,195,0) 58%),
-        radial-gradient(1000px 740px at 78% 24%, rgba(54,241,225,.16) 0%, rgba(54,241,225,0) 62%),
-        radial-gradient(1000px 760px at 55% 90%, rgba(10,38,80,.92) 0%, rgba(6,22,43,1) 60%),
-        linear-gradient(160deg, var(--bg0), var(--bg1));
+      color:var(--ink);
+      background: var(--bg);
       overflow-x:hidden;
     }
 
-    /* subtle grain */
-    .grain{
+    /* subtle background accents (very Apple: barely there) */
+    .bg-accent{
+      position:fixed; inset:-20%;
       pointer-events:none;
-      position:fixed; inset:-40%;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
-      opacity:.22;
-      transform: rotate(10deg);
+      background:
+        radial-gradient(900px 650px at 22% 20%, rgba(47,107,255,.10) 0%, rgba(47,107,255,0) 55%),
+        radial-gradient(900px 650px at 78% 18%, rgba(47,230,214,.11) 0%, rgba(47,230,214,0) 56%),
+        radial-gradient(900px 650px at 52% 92%, rgba(22,199,183,.08) 0%, rgba(22,199,183,0) 58%);
+      filter: blur(0px);
+      opacity:1;
     }
 
-    /* Top nav (Apple-like) */
+    /* Top nav (minimal) */
     .nav{
       position:fixed;
-      top:18px; left:50%;
+      top:16px; left:50%;
       transform:translateX(-50%);
       width:min(var(--max), 92vw);
       z-index:50;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
-      padding: 10px 14px;
-      border:1px solid rgba(255,255,255,.14);
+      gap:12px;
+      padding: 10px 12px;
+      border:1px solid var(--line2);
       border-radius: 999px;
-      background: rgba(0,0,0,.22);
+      background: rgba(255,255,255,.72);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(11,15,24,.06);
     }
     .brand{
       display:flex; align-items:center; gap:10px;
-      font-weight:600;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      font-size:12px;
-      color: rgba(244,247,250,.86);
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: rgba(11,15,24,.82);
     }
     .orb{
       width:22px; height:22px; border-radius:999px;
-      background: radial-gradient(circle at 35% 35%, rgba(54,241,225,.95), rgba(30,214,195,.55) 52%, rgba(10,38,80,.0) 70%),
-                  radial-gradient(circle at 70% 75%, rgba(30,214,195,.35), rgba(30,214,195,0) 62%);
-      box-shadow: 0 0 26px rgba(54,241,225,.22);
-      border:1px solid rgba(54,241,225,.22);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(47,230,214,.95), rgba(22,199,183,.55) 55%, rgba(47,107,255,.0) 72%),
+        radial-gradient(circle at 70% 75%, rgba(47,107,255,.30), rgba(47,107,255,0) 62%);
+      border: 1px solid rgba(22,199,183,.22);
+      box-shadow: 0 10px 20px rgba(22,199,183,.12);
+    }
+    .navlinks{
+      display:flex; align-items:center; gap:6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
     .nav a{
-      color: rgba(244,247,250,.72);
       text-decoration:none;
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
+      color: rgba(11,15,24,.58);
+      font-size: 12px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
       padding: 8px 10px;
       border-radius: 999px;
-      transition: .2s ease;
-      border:1px solid transparent;
+      border: 1px solid transparent;
+      transition: .18s ease;
     }
     .nav a:hover{
-      color: rgba(244,247,250,.92);
-      border-color: rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-    }
-    .nav .right{
-      display:flex; align-items:center; gap:8px;
+      color: rgba(11,15,24,.82);
+      border-color: var(--line2);
+      background: rgba(255,255,255,.8);
     }
     .pill{
       font-size:12px;
       padding: 8px 12px;
       border-radius:999px;
-      border:1px solid rgba(54,241,225,.26);
-      background: rgba(54,241,225,.10);
-      color: rgba(244,247,250,.86);
-      letter-spacing:.06em;
-      text-transform:uppercase;
+      border: 1px solid rgba(22,199,183,.22);
+      background: rgba(22,199,183,.10);
+      color: rgba(11,15,24,.78);
+      letter-spacing:.08em;
+      text-transform: uppercase;
       cursor:pointer;
       user-select:none;
+      white-space:nowrap;
     }
 
-    /* Sections (Keynote-like scroll) */
+    /* Deck */
     .wrap{
       width:min(var(--max), 92vw);
       margin: 0 auto;
-      padding: 92px 0 120px;
+      padding: 88px 0 120px;
       display:flex;
       flex-direction:column;
-      gap: 22px;
+      gap: 18px;
     }
 
-    .section{
+    /* Slide sections (white cards with soft borders) */
+    .slide{
       position:relative;
-      border:1px solid var(--stroke);
-      border-radius: var(--radius);
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      background: rgba(255,255,255,.75);
       box-shadow: var(--shadow);
-      background: linear-gradient(180deg, var(--card), var(--card2));
       overflow:hidden;
       padding: calc(var(--pad) + 4px);
       min-height: 620px;
       scroll-margin-top: 110px;
     }
 
-    /* Apple-like thin accent */
-    .section::before{
+    /* Apple-like thin accent line */
+    .slide::before{
       content:"";
-      position:absolute; left:0; top:0;
-      width:100%; height:5px;
-      background: linear-gradient(90deg, rgba(30,214,195,0), rgba(54,241,225,.9), rgba(30,214,195,0));
-      opacity:.85;
+      position:absolute;
+      left:0; top:0;
+      width:100%; height:4px;
+      background: linear-gradient(90deg, rgba(47,107,255,0), rgba(47,230,214,.70), rgba(47,107,255,.45), rgba(47,107,255,0));
+      opacity:.9;
     }
 
-    /* Soft spotlight */
-    .spot{
-      position:absolute;
-      inset:-120px -120px auto -120px;
+    /* super subtle corner glow */
+    .glow{
+      position:absolute; inset:auto -30% -40% -30%;
       height: 420px;
-      background: radial-gradient(closest-side at 50% 35%, rgba(54,241,225,.18), rgba(30,214,195,.08) 48%, rgba(6,22,43,0) 75%);
+      background: radial-gradient(closest-side at 50% 35%, rgba(47,230,214,.16), rgba(47,107,255,.08) 45%, rgba(255,255,255,0) 70%);
       pointer-events:none;
-      filter: blur(0px);
+      filter: blur(2px);
+      opacity:.9;
     }
 
-    /* Waves SVG layer */
-    .waves{
-      position:absolute;
-      inset:-1px;
-      pointer-events:none;
-      opacity:.95;
-    }
-
-    /* Typography */
     .kicker{
       display:inline-flex;
       align-items:center;
       gap:10px;
-      font-size:12px;
+      font-size: 12px;
       letter-spacing:.22em;
-      text-transform:uppercase;
-      color: var(--muted);
+      text-transform: uppercase;
+      color: var(--muted2);
     }
     .dot{
       width:7px; height:7px; border-radius:99px;
       background: linear-gradient(180deg, var(--tq), var(--aqua));
-      box-shadow: 0 0 18px rgba(54,241,225,.45);
+      box-shadow: 0 10px 20px rgba(22,199,183,.18);
     }
 
     h1,h2,h3{ margin: 14px 0 0; }
     h1{
-      font-size: clamp(48px, 6vw, 86px);
+      font-size: clamp(52px, 6.2vw, 88px);
       line-height: 1.02;
-      letter-spacing: -.03em;
+      letter-spacing: -.04em;
       font-weight: 650;
-    }
-    /* Apple-ish headline: clean + subtle editorial */
-    .display{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-    .editorial{
-      font-family: "Playfair Display", serif;
-      letter-spacing: -.02em;
     }
     h2{
       font-size: clamp(34px, 3.6vw, 56px);
-      line-height:1.08;
-      letter-spacing:-.02em;
-      font-weight: 640;
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      font-weight: 650;
     }
     p{
       margin: 16px 0 0;
       font-size: 18px;
-      line-height: 1.58;
-      color: rgba(244,247,250,.86);
-      max-width: 80ch;
+      line-height: 1.60;
+      color: rgba(11,15,24,.72);
+      max-width: 82ch;
     }
     .accent{
-      color: var(--aqua);
-      text-shadow: 0 0 22px rgba(54,241,225,.28);
+      background: linear-gradient(90deg, var(--tq), var(--blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
-    .muted{ color: var(--muted); }
-
-    /* Layout helpers */
     .center{
       text-align:center;
       display:flex;
@@ -225,91 +216,118 @@
       justify-content:center;
       align-items:center;
     }
+    .tight p{ max-width: 62ch; }
+
+    /* Apple cards */
     .row{
       display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap: 16px;
-      margin-top: 26px;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
       width:100%;
+      margin-top: 28px;
     }
     .card{
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
+      border:1px solid var(--line);
       border-radius: 22px;
-      padding: 18px 18px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.85);
+      box-shadow: var(--shadow2);
+      padding: 18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .card::after{
+      content:"";
+      position:absolute; inset:-30% -30% auto -30%;
+      height: 190px;
+      background: radial-gradient(closest-side at 50% 30%, rgba(47,230,214,.14), rgba(47,107,255,.08) 52%, rgba(255,255,255,0) 72%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .card h3{
+      margin:0;
+      font-size: 13px;
+      letter-spacing:.18em;
+      text-transform: uppercase;
+      color: rgba(11,15,24,.62);
+      font-weight: 700;
     }
     .metric{
-      font-size: 56px;
-      line-height:1;
-      font-weight: 700;
-      letter-spacing:-.03em;
-      margin:0;
+      margin: 10px 0 0;
+      font-size: 54px;
+      letter-spacing: -.04em;
+      font-weight: 720;
+      color: rgba(11,15,24,.92);
+      position:relative;
+      z-index:1;
     }
+    .metric .accent{ font-weight: 780; }
     .label{
-      margin-top:10px;
-      color: var(--muted2);
+      margin-top: 10px;
       font-size: 12px;
       letter-spacing:.12em;
       text-transform: uppercase;
+      color: rgba(11,15,24,.52);
+      position:relative;
+      z-index:1;
     }
     .small{
-      font-size: 14px;
-      color: var(--muted);
       margin-top: 12px;
-      line-height:1.55;
+      font-size: 15px;
+      line-height: 1.55;
+      color: rgba(11,15,24,.62);
+      position:relative;
+      z-index:1;
     }
 
+    /* List tiles */
     .grid{
+      margin-top: 28px;
+      width:100%;
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-      margin-top: 26px;
-      width:100%;
     }
     .tile{
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.16);
+      border:1px solid var(--line);
       border-radius: 22px;
-      padding: 16px 16px;
-      min-height: 118px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.88);
+      box-shadow: var(--shadow2);
+      padding: 16px;
     }
     .tile h3{
       margin:0;
       font-size: 13px;
       letter-spacing:.18em;
       text-transform: uppercase;
-      color: rgba(54,241,225,.95);
+      color: rgba(11,15,24,.68);
+      font-weight: 750;
     }
     .tile p{
       margin: 10px 0 0;
       font-size: 16px;
-      line-height:1.45;
-      color: rgba(244,247,250,.82);
+      color: rgba(11,15,24,.66);
+      line-height: 1.5;
     }
 
+    /* Compare */
     .compare{
+      width:100%;
+      margin-top: 28px;
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 26px;
-      width:100%;
+      gap: 14px;
     }
     .panel{
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.16);
+      border:1px solid var(--line);
       border-radius: 24px;
-      padding: 20px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.90);
+      box-shadow: var(--shadow2);
+      padding: 18px;
     }
     .panel .head{
       display:flex;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
       gap:12px;
       margin-bottom: 10px;
     }
@@ -319,43 +337,46 @@
       text-transform: uppercase;
       padding: 8px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(54,241,225,.28);
-      color: rgba(244,247,250,.86);
-      background: rgba(54,241,225,.10);
+      border: 1px solid rgba(22,199,183,.22);
+      background: rgba(22,199,183,.10);
+      color: rgba(11,15,24,.72);
+      white-space:nowrap;
     }
     .panel h3{
       margin:0;
       font-size: 22px;
-      font-weight: 650;
-      letter-spacing:-.01em;
+      letter-spacing:-.02em;
+      font-weight: 700;
+      color: rgba(11,15,24,.92);
     }
     .kv{
-      margin-top: 14px;
       display:grid;
-      gap:10px;
-      color: rgba(244,247,250,.84);
+      gap: 10px;
+      margin-top: 12px;
       font-size: 16px;
-      line-height:1.45;
+      color: rgba(11,15,24,.70);
+      line-height:1.5;
     }
     .kv strong{
-      color: rgba(244,247,250,.92);
-      font-weight:600;
+      color: rgba(11,15,24,.84);
+      font-weight: 700;
     }
     .hi{
-      border-color: rgba(54,241,225,.40);
-      box-shadow: 0 0 0 1px rgba(54,241,225,.18) inset;
+      border-color: rgba(47,107,255,.20);
+      box-shadow: 0 0 0 1px rgba(47,107,255,.10) inset, var(--shadow2);
     }
 
-    /* Footer */
+    /* Footer per slide */
     .footer{
       position:absolute;
-      bottom:18px;
+      bottom:16px;
       left: calc(var(--pad) + 4px);
       right: calc(var(--pad) + 4px);
       display:flex;
-      justify-content:space-between;
       align-items:center;
-      color: rgba(244,247,250,.55);
+      justify-content:space-between;
+      gap:10px;
+      color: rgba(11,15,24,.40);
       font-size: 12px;
       letter-spacing:.12em;
       text-transform: uppercase;
@@ -364,18 +385,17 @@
 
     /* Mobile */
     @media (max-width: 980px){
+      .navlinks{ display:none; }
       .row{ grid-template-columns: 1fr; }
       .grid{ grid-template-columns: 1fr; }
       .compare{ grid-template-columns: 1fr; }
-      .section{ min-height: 660px; }
-      .nav{ gap:10px; }
-      .nav .right{ display:none; }
+      .slide{ min-height: 680px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="grain"></div>
+  <div class="bg-accent" aria-hidden="true"></div>
 
   <!-- NAV -->
   <div class="nav">
@@ -384,95 +404,49 @@
       ABIERTO RC
     </div>
 
-    <div class="right">
-      <a href="#hero">Inicio</a>
-      <a href="#manifesto">Valores</a>
-      <a href="#committee">Comité</a>
-      <a href="#capacity">Capacidad</a>
-      <a href="#venues">Sedes</a>
-      <a href="#prizes">Premios</a>
+    <div class="navlinks">
+      <a href="#inicio">Inicio</a>
+      <a href="#valores">Valores</a>
+      <a href="#hora-santa">Mega Hora Santa</a>
+      <a href="#comite">Comités</a>
+      <a href="#capacidad">Capacidad</a>
+      <a href="#sedes">Sedes</a>
+      <a href="#premios">Premios</a>
     </div>
 
-    <div class="pill" id="scrollTopBtn">↑ Top</div>
+    <div class="pill" id="topBtn">↑ Top</div>
   </div>
 
   <main class="wrap">
 
-    <!-- HERO -->
-    <section class="section center" id="hero" aria-label="Hero">
-      <div class="spot"></div>
-      <svg class="waves" viewBox="0 0 1440 810" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0" stop-color="#1ed6c3" stop-opacity=".16"/>
-            <stop offset=".55" stop-color="#36f1e1" stop-opacity=".10"/>
-            <stop offset="1" stop-color="#06162b" stop-opacity="0"/>
-          </linearGradient>
-          <linearGradient id="g2" x1="1" x2="0" y1="0" y2="1">
-            <stop offset="0" stop-color="#0a2650" stop-opacity=".55"/>
-            <stop offset=".65" stop-color="#0b2b52" stop-opacity=".18"/>
-            <stop offset="1" stop-color="#06162b" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <path d="M0,540 C220,470 390,610 580,560 C800,500 960,370 1140,420 C1280,460 1360,520 1440,460 L1440,810 L0,810 Z" fill="url(#g2)"/>
-        <path d="M0,620 C260,560 420,720 640,660 C860,600 960,500 1120,520 C1260,540 1340,620 1440,560 L1440,810 L0,810 Z" fill="url(#g1)"/>
-      </svg>
+    <!-- 1) INICIO -->
+    <section class="slide center tight" id="inicio" aria-label="Inicio">
+      <div class="glow" aria-hidden="true"></div>
 
       <div class="kicker"><span class="dot"></span> torneo con valores • visión nacional aspiracional</div>
-
-      <h1 class="display">ABIERTO <span class="accent">RC</span></h1>
-      <p style="margin-top:12px;font-size:22px;color:rgba(244,247,250,.92)">
-        <span class="editorial" style="font-weight:600">Saca tus valores.</span>
+      <h1>ABIERTO <span class="accent">RC</span></h1>
+      <p style="margin-top:14px;font-size:22px;color:rgba(11,15,24,.82);font-weight:500">
+        Saca tus valores.
       </p>
-      <p class="muted" style="margin-top:10px;font-size:16px;max-width:60ch">
-        “Sacar” de servir en el partido. Competir con propósito, carácter y comunidad.
-      </p>
-
-      <div class="row" style="max-width:980px">
-        <div class="card">
-          <p class="metric"><span class="accent">59</span></p>
-          <div class="label">capacidad máxima estimada</div>
-          <p class="small">
-            Operación con 3 canchas, viernes 6–8 PM, sábado 8 AM–8 PM, final domingo 12:00 PM.
-            Cupo recomendado premium: <span class="accent">48</span> parejas.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="label">horarios clave</div>
-          <p class="small" style="margin-top:10px">
-            <strong>Viernes:</strong> 6:00–8:00 PM (último inicio 8:00)<br/>
-            <strong>Sábado:</strong> 8:00 AM–8:00 PM (último inicio 8:00)<br/>
-            <strong>Final:</strong> Domingo 12:00 PM
-          </p>
-        </div>
-      </div>
 
       <div class="footer">
         <span>ABIERTO RC</span>
-        <span>Apple-style Deck</span>
+        <span>Deck • Light</span>
       </div>
     </section>
 
-    <!-- MANIFIESTO -->
-    <section class="section center" id="manifesto" aria-label="Manifiesto">
-      <div class="spot"></div>
-      <svg class="waves" viewBox="0 0 1440 810" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="m1" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0" stop-color="#36f1e1" stop-opacity=".12"/>
-            <stop offset=".6" stop-color="#1ed6c3" stop-opacity=".07"/>
-            <stop offset="1" stop-color="#06162b" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <path d="M0,610 C320,520 520,700 760,620 C980,550 1100,450 1440,520 L1440,810 L0,810 Z" fill="url(#m1)"/>
-      </svg>
+    <!-- 2) VALORES -->
+    <section class="slide center tight" id="valores" aria-label="Valores">
+      <div class="glow" aria-hidden="true"></div>
 
-      <div class="kicker"><span class="dot"></span> identidad espiritual + excelencia</div>
-      <h2 class="display">Competencia con <span class="accent">propósito</span>.</h2>
+      <div class="kicker"><span class="dot"></span> identidad</div>
+      <h2>Competencia con <span class="accent">propósito</span>.</h2>
       <p>
         ABIERTO RC es un torneo enfocado en valores: respeto, excelencia, comunidad y formación.
-        La experiencia deportiva se eleva cuando el carácter pesa tanto como el marcador.
+        Aquí el carácter pesa tanto como el marcador.
+      </p>
+      <p style="margin-top:10px;color:rgba(11,15,24,.64)">
+        “Sacar” de servir en el partido.
       </p>
 
       <div class="footer">
@@ -481,29 +455,101 @@
       </div>
     </section>
 
-    <!-- COMITÉ (solo título, como pediste) -->
-    <section class="section center" id="committee" aria-label="Comité">
-      <div class="spot"></div>
-      <div class="kicker"><span class="dot"></span> organización</div>
-      <h2 class="display">Comité</h2>
-      <p class="muted" style="max-width:56ch">
-        Estructura clara para mantener un estándar aspiracional.
+    <!-- 3) MEGA HORA SANTA -->
+    <section class="slide center tight" id="hora-santa" aria-label="Mega Hora Santa">
+      <div class="glow" aria-hidden="true"></div>
+
+      <div class="kicker"><span class="dot"></span> anuncio</div>
+      <h2><span class="accent">Mega Hora Santa</span></h2>
+      <p>
+        Inicio espiritual del torneo. Un momento central para alinear la competencia con el propósito y los valores RC.
       </p>
 
       <div class="footer">
-        <span>Comité</span>
+        <span>Mega Hora Santa</span>
         <span>ABIERTO RC</span>
       </div>
     </section>
 
-    <!-- CAPACIDAD -->
-    <section class="section center" id="capacity" aria-label="Capacidad">
-      <div class="spot"></div>
-      <div class="kicker"><span class="dot"></span> capacidad</div>
-      <h2 class="display"><span class="accent">59</span> parejas máximo</h2>
-      <p class="muted" style="max-width:64ch">
-        Recomendación operación premium: <span class="accent">48</span> parejas (mejores descansos, control de horarios y final con experiencia completa).
+    <!-- 4) COMITÉS -->
+    <section class="slide" id="comite" aria-label="Comités">
+      <div class="glow" aria-hidden="true"></div>
+
+      <div class="kicker"><span class="dot"></span> organización</div>
+      <h2>Comités</h2>
+      <p class="muted" style="max-width:78ch">
+        Estructura clara para sostener un estándar aspiracional y una experiencia consistente.
       </p>
+
+      <div class="grid">
+        <div class="tile">
+          <h3>Deportivo</h3>
+          <p>Formato, reglas, arbitraje y control de competencia.</p>
+        </div>
+        <div class="tile">
+          <h3>Mística</h3>
+          <p>Identidad RC, acompañamiento espiritual y Mega Hora Santa.</p>
+        </div>
+        <div class="tile">
+          <h3>Logística</h3>
+          <p>Programación, flujo en sedes, tiempos y operación general.</p>
+        </div>
+        <div class="tile">
+          <h3>Atención al deportista</h3>
+          <p>Registro, comunicación, hospitalidad y soporte al jugador.</p>
+        </div>
+        <div class="tile">
+          <h3>Patrocinadores</h3>
+          <p>Alianzas, activaciones y presencia de marca premium.</p>
+        </div>
+        <div class="tile">
+          <h3>Staff</h3>
+          <p>Equipo operativo en cancha y coordinación en sitio.</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Comités</span>
+        <span>ABIERTO RC</span>
+      </div>
+    </section>
+
+    <!-- 5) CAPACIDAD -->
+    <section class="slide center" id="capacidad" aria-label="Capacidad">
+      <div class="glow" aria-hidden="true"></div>
+
+      <div class="kicker"><span class="dot"></span> capacidad</div>
+      <h2>Capacidad del torneo</h2>
+
+      <div class="row" style="max-width:980px">
+        <div class="card">
+          <h3>Parejas</h3>
+          <div class="metric"><span class="accent">44</span></div>
+          <div class="label">cupo total</div>
+          <div class="small">Formato recomendado para operación limpia y experiencia premium.</div>
+        </div>
+
+        <div class="card">
+          <h3>Jugadores</h3>
+          <div class="metric"><span class="accent">88</span></div>
+          <div class="label">participantes</div>
+          <div class="small">Doble varonil/mixto/femenil según categorías definidas.</div>
+        </div>
+
+        <div class="card">
+          <h3>Categorías</h3>
+          <div class="metric"><span class="accent">3</span></div>
+          <div class="label">niveles</div>
+          <div class="small">Estructura clara para competitividad y orden.</div>
+        </div>
+
+        <div class="card">
+          <h3>Recursos</h3>
+          <div class="metric"><span class="accent">3</span></div>
+          <div class="label">canchas</div>
+          <div class="small">Ventana: viernes 6–8 PM, sábado 8 AM–8 PM, final domingo 12:00 PM.</div>
+        </div>
+      </div>
 
       <div class="footer">
         <span>Capacidad</span>
@@ -511,13 +557,14 @@
       </div>
     </section>
 
-    <!-- SEDES (solo precio y espacio) -->
-    <section class="section" id="venues" aria-label="Sedes">
-      <div class="spot"></div>
+    <!-- 6) SEDES -->
+    <section class="slide" id="sedes" aria-label="Sedes">
+      <div class="glow" aria-hidden="true"></div>
+
       <div class="kicker"><span class="dot"></span> sedes del torneo</div>
-      <h2 class="display">Sedes</h2>
-      <p class="muted" style="max-width:78ch">
-        La diferencia clave para ABIERTO RC: <strong>precio</strong> y <strong>espacio</strong>.
+      <h2>Sedes</h2>
+      <p style="max-width:78ch">
+        Diferencia clave: <strong>precio</strong> y <strong>espacio</strong>.
       </p>
 
       <div class="compare">
@@ -550,16 +597,17 @@
       </div>
     </section>
 
-    <!-- PREMIOS -->
-    <section class="section center" id="prizes" aria-label="Premios">
-      <div class="spot"></div>
+    <!-- 7) PREMIOS -->
+    <section class="slide center tight" id="premios" aria-label="Premios">
+      <div class="glow" aria-hidden="true"></div>
+
       <div class="kicker"><span class="dot"></span> premios</div>
-      <h2 class="display">Bolsa de premios</h2>
-      <p class="metric" style="margin:18px 0 0"><span class="accent">$40,000</span></p>
-      <div class="label" style="margin-top:10px">pesos mexicanos</div>
-      <p class="muted" style="max-width:60ch">
-        Premiación diseñada para reconocer resultado y carácter.
-      </p>
+      <h2>Bolsa de premios</h2>
+      <p style="margin-top:10px;font-size:18px;color:rgba(11,15,24,.62)">Total</p>
+      <div style="margin-top:6px;font-size:64px;letter-spacing:-.04em;font-weight:800">
+        <span class="accent">$40,000</span>
+      </div>
+      <p style="margin-top:10px;color:rgba(11,15,24,.62)">MXN</p>
 
       <div class="footer">
         <span>Premios</span>
@@ -567,31 +615,43 @@
       </div>
     </section>
 
-    <!-- CIERRE -->
-    <section class="section center" id="close" aria-label="Cierre">
-      <div class="spot"></div>
-      <div class="kicker"><span class="dot"></span> cierre</div>
-      <h2 class="display">ABIERTO <span class="accent">RC</span></h2>
-      <p style="font-size:20px;color:rgba(244,247,250,.92)">
-        <span class="editorial" style="font-weight:600">Saca tus valores.</span>
-      </p>
-      <p class="muted" style="max-width:70ch">
-        Un torneo aspiracional que puede crecer a nivel nacional manteniendo su identidad: deporte, comunidad y fe.
-      </p>
-
-      <div class="footer">
-        <span>ABIERTO RC</span>
-        <span>2026</span>
-      </div>
-    </section>
-
   </main>
 
   <script>
-    // Smooth top
-    document.getElementById('scrollTopBtn')?.addEventListener('click', () => {
+    // Top button
+    document.getElementById('topBtn')?.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Optional: keyboard slide navigation (←/→ scroll to next/prev slide)
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let idx = 0;
+
+    function currentIndex(){
+      const y = window.scrollY + 120;
+      let best = 0;
+      for(let i=0;i<slides.length;i++){
+        const top = slides[i].getBoundingClientRect().top + window.scrollY;
+        if(top <= y) best = i;
+      }
+      idx = best;
+    }
+
+    function go(i){
+      idx = Math.max(0, Math.min(slides.length-1, i));
+      slides[idx].scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+
+    window.addEventListener('scroll', () => { currentIndex(); }, { passive:true });
+
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowRight' || e.key === 'PageDown') go(idx + 1);
+      if(e.key === 'ArrowLeft'  || e.key === 'PageUp')   go(idx - 1);
+      if(e.key.toLowerCase() === 'home') go(0);
+      if(e.key.toLowerCase() === 'end')  go(slides.length - 1);
+    });
+
+    currentIndex();
   </script>
 </body>
 </html>
